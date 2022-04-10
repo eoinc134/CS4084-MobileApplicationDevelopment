@@ -19,8 +19,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.regex.Pattern;
-
 public class RegisterUser extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private EditText editTextFullName, editTextEmail, editTextPassword, getEditTextPasswordConfirm;
@@ -39,11 +37,11 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         logIn = (TextView) findViewById(R.id.logIn);
         logIn.setOnClickListener(this);
 
-        register = (Button) findViewById(R.id.registerButton);
+        register = (Button) findViewById(R.id.signInBtn);
         register.setOnClickListener(this);
 
-        editTextEmail = (EditText) findViewById(R.id.editTextTextEmailAddress);
-        editTextFullName = (EditText) findViewById(R.id.editTextTextName);
+        editTextEmail = (EditText) findViewById(R.id.editTextEmailAddress);
+        editTextFullName = (EditText) findViewById(R.id.editTextPassword);
         editTextPassword = (EditText) findViewById(R.id.editTextTextPassword);
         getEditTextPasswordConfirm = (EditText) findViewById(R.id.editTextTextConfirmPassword);
 
@@ -56,7 +54,7 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
             case R.id.logIn:
                 startActivity(new Intent(this, MainActivity.class));
                 break;
-            case R.id.registerButton:
+            case R.id.signInBtn:
                 registerUser();
                 break;
         }
@@ -88,13 +86,13 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                         FirebaseDatabase.getInstance().getReference("Users")
                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                 .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>(){
-                                    @Override
+                            @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                         if(task.isSuccessful()){
                                             Toast.makeText(RegisterUser.this, "User has been successfully registered!", Toast.LENGTH_LONG).show();
                                             progressBar.setVisibility(View.VISIBLE);
                                         } else {
-                                            Toast.makeText(RegisterUser.this, "Failed to create account, try again", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(RegisterUser.this, ", try again", Toast.LENGTH_LONG).show();
                                             progressBar.setVisibility(View.GONE);
                                         }
                                     }
