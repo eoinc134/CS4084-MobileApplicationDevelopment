@@ -68,18 +68,24 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String password = editTextPassword.getText().toString().trim();
         String confirmPassword = getEditTextPasswordConfirm.getText().toString().trim();
         if (validation(email, name, password, confirmPassword) == false){
+            email = "";
+            name= "";
+            password = "";
+            confirmPassword = "";
             return;
         }
 
 
         progressBar.setVisibility(View.VISIBLE);
+        String finalName = name;
+        String finalEmail = email;
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()){
-                        User user = new User(name, email);
+                        User user = new User(finalName, finalEmail);
 
                         FirebaseDatabase.getInstance("https://safeaccomodation-58b6c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
                                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())

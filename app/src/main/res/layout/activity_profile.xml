@@ -22,23 +22,53 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="37dp"
         android:layout_marginTop="123dp"
+        android:layout_marginEnd="13dp"
         android:layout_marginBottom="37dp"
         android:text="Email Address:"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/FullNameTextView"
+        app:layout_constraintBottom_toTopOf="@+id/fullNameTextView"
+        app:layout_constraintEnd_toStartOf="@+id/emptyEmailTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/FullNameTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/fullNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="37dp"
+        android:layout_marginEnd="13dp"
         android:layout_marginBottom="661dp"
         android:text="Full Name:"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/emailAddressTextView"
-        app:layout_constraintStart_toStartOf="@+id/emailAddressTextView"
+        app:layout_constraintEnd_toStartOf="@+id/emptyFullNameTextView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailAddressTextView" />
+
+    <TextView
+        android:id="@+id/emptyEmailTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="122dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="36dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/emptyFullNameTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/emailAddressTextView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emptyFullNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="661dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fullNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/emptyEmailTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
