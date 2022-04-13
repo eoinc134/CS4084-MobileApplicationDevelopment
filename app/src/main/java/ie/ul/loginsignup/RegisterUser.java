@@ -97,9 +97,10 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                                              Toast.makeText(RegisterUser.this, "User successfully registered! Please check your email to verify account", Toast.LENGTH_LONG).show();
                                              FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                                              user.sendEmailVerification();
-                                        } else {
+                                             progressBar.setVisibility(View.INVISIBLE);
+                                         } else {
                                             Toast.makeText(RegisterUser.this, "Registration failed, try again", Toast.LENGTH_LONG).show();
-                                            progressBar.setVisibility(View.GONE);
+                                             progressBar.setVisibility(View.INVISIBLE);
                                         }
                                     }
 
