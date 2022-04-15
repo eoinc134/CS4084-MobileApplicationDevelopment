@@ -4,4 +4,13 @@
     <string name="title_feed">Feed</string>
     <string name="title_map">Map</string>
     <string name="title_chat">Chat</string>
+
+    <string-array name="year_of_study_array">
+        <item>First year</item>
+        <item>Second year</item>
+        <item>Third year</item>
+        <item>Fourth year</item>
+        <item>Post graduate</item>
+    </string-array>
+
 </resources>

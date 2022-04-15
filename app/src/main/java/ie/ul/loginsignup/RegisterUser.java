@@ -80,38 +80,38 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         String finalName = name;
         String finalEmail = email;
         mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if (task.isSuccessful()){
-                        User user = new User(finalName, finalEmail);
+                        if (task.isSuccessful()){
+                            User user = new User(finalName, finalEmail);
 
-                        FirebaseDatabase.getInstance("https://safeaccomodation-58b6c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
-                                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            FirebaseDatabase.getInstance("https://safeaccomodation-58b6c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
+                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                         if(task.isSuccessful()){
-                                             progressBar.setVisibility(View.VISIBLE);
-                                             Toast.makeText(RegisterUser.this, "User successfully registered! Please check your email to verify account", Toast.LENGTH_LONG).show();
-                                             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                             user.sendEmailVerification();
-                                             progressBar.setVisibility(View.INVISIBLE);
-                                         } else {
-                                            Toast.makeText(RegisterUser.this, "Registration failed, try again", Toast.LENGTH_LONG).show();
-                                             progressBar.setVisibility(View.INVISIBLE);
-                                        }
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        progressBar.setVisibility(View.VISIBLE);
+                                        Toast.makeText(RegisterUser.this, "User successfully registered! Please check your email to verify account", Toast.LENGTH_LONG).show();
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        user.sendEmailVerification();
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                    } else {
+                                        Toast.makeText(RegisterUser.this, "Registration failed, try again", Toast.LENGTH_LONG).show();
+                                        progressBar.setVisibility(View.INVISIBLE);
                                     }
+                                }
 
-                        });
-                    }else {
-                        Toast.makeText(RegisterUser.this, "Failed to create account, Ensure email hasn't been used. Try again", Toast.LENGTH_LONG).show();
-                        progressBar.setVisibility(View.GONE);
+                            });
+                        }else {
+                            Toast.makeText(RegisterUser.this, "Failed to create account, Ensure email hasn't been used. Try again", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
+
                     }
-
-                }
-        });
+                });
 
 
 

@@ -2,7 +2,7 @@ package ie.ul.loginsignup;
 
 public class User {
 
-    public String fullName, email;
+    public String fullName, email, gender;
 
     public User(){
 

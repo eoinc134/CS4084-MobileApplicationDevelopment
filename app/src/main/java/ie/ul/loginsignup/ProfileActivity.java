@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,7 @@ public class ProfileActivity extends AppCompatActivity {
     private long pressedTime;
 
 
+
     @Override
     public void onBackPressed() {
         if (pressedTime + 2000 > System.currentTimeMillis()) {
@@ -50,6 +54,8 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         logout = (Button) findViewById(R.id.SignOutButton);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,11 +91,5 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
-
-
-
     }
-
-
-
 }

@@ -4,71 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".ProfileActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
 
     <Button
         android:id="@+id/SignOutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
-        android:layout_marginBottom="476dp"
+        android:layout_marginBottom="85dp"
         android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/emailAddressTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="123dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="37dp"
         android:text="Email Address:"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/fullNameTextView"
-        app:layout_constraintEnd_toStartOf="@+id/emptyEmailTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/emptyEmailTextView"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/fullNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginBottom="661dp"
+        android:layout_marginTop="179dp"
         android:text="Full Name:"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/emailAddressTextView"
-        app:layout_constraintEnd_toStartOf="@+id/emptyFullNameTextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailAddressTextView" />
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/emptyEmailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="122dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginBottom="24dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/emptyFullNameTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/emailAddressTextView"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/fullNameTextView"
+        app:layout_constraintStart_toEndOf="@+id/emailAddressTextView" />
 
     <TextView
         android:id="@+id/emptyFullNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="661dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="24dp"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fullNameTextView"
         app:layout_constraintTop_toBottomOf="@+id/emptyEmailTextView" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteY="346dp" />
+
+    <Button
+        android:id="@+id/applyChangesBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply Changes"
+        tools:layout_editor_absoluteX="116dp"
+        tools:layout_editor_absoluteY="561dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
