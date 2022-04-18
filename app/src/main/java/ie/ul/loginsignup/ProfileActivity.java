@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 
@@ -25,17 +29,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private FirebaseUser user;
     private DatabaseReference reference;
-    private Button logout;
+    private Button logout, applyChanges;
     private String userID;
     private long pressedTime;
-
+    private Spinner spinner;
 
 
     @Override
+    /**
+     *
+     *
+     */
     public void onBackPressed() {
         if (pressedTime + 2000 > System.currentTimeMillis()) {
             super.onBackPressed();
@@ -53,21 +61,37 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
+
         logout = (Button) findViewById(R.id.SignOutButton);
+        logout.setOnClickListener(this);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        applyChanges = (Button) findViewById(R.id.applyChangesBtn);
+        applyChanges.setOnClickListener(this);
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
-            }
-        });
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance("https://safeaccomodation-58b6c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users");
         userID = user.getUid();
+
+        spinner = (Spinner) findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(this);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.year_of_study_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+//            }
+//        });
 
         final TextView name = (TextView) findViewById(R.id.emptyFullNameTextView);
         final TextView emailTextView = (TextView) findViewById(R.id.emptyEmailTextView);
@@ -80,9 +104,27 @@ public class ProfileActivity extends AppCompatActivity {
                 if (userProfile != null){
                     String fullName = userProfile.fullName;
                     String email = userProfile.email;
-
+                    String yearOfStudy = userProfile.yearOfStudy;
+                    String gender = userProfile.gender;
                     name.setText(fullName);
                     emailTextView.setText(email);
+                    // GENDER CHECKED
+                    if (gender.equals("Male")) {
+                        //radiobtn male = true
+                    }
+                    // Spinner year selected.
+                    // Not ideal way but with so few options hardcoding works better than spending the resources figuring out a solution
+                    if (yearOfStudy.equals("First year")) {
+                        spinner.setSelection(0,true);
+                    } else if(yearOfStudy.equals("Second year")) {
+                        spinner.setSelection(1,true);
+                    } else if (yearOfStudy.equals("Third year")){
+                        spinner.setSelection(2,true);
+                    } else if (yearOfStudy.equals("Fourth year")){
+                        spinner.setSelection(3,true);
+                    } else if (yearOfStudy.equals("Post graduate")){
+                        spinner.setSelection(4,true);
+                    }
                 }
             }
 
@@ -91,5 +133,44 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.applyChangesBtn:
+                //send to database
+                //reference.child(userID).updateChildren(user);
+                spinner = (Spinner) findViewById(R.id.spinner);
+                String studyYear = String.valueOf(spinner.getSelectedItem());
+
+
+                Log.d("Apply Changes", " Reached here successfully " + studyYear);
+
+
+                break;
+            case R.id.SignOutButton:
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(new Intent(ProfileActivity.this, MainActivity.class));
+                break;
+        }
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        String selected = (String) parent.getItemAtPosition(pos);
+        Log.d("spinner", "item selected is: " + selected);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
 }

@@ -75,8 +75,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (validation(email, password) == false){
             email = "";
             password = "";
-            return;
+            //THIS RETURN MUST BE ADDED IN
+            //return;
         }
+
+        //TESTING PURPOSES ONLY DELETE AFTER
+        email = "seanr120700@gmail.com";
+        password = "pass12";
+
+        //END TESTING
+
         progressBar.setVisibility(View.VISIBLE);
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

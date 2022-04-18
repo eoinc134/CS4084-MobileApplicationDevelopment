@@ -79,13 +79,15 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
         progressBar.setVisibility(View.VISIBLE);
         String finalName = name;
         String finalEmail = email;
+        String gender = "";
+        String yearOfStudy = "First year";
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()){
-                            User user = new User(finalName, finalEmail);
+                            User user = new User(finalName, finalEmail, gender, yearOfStudy);
 
                             FirebaseDatabase.getInstance("https://safeaccomodation-58b6c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
