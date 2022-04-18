@@ -20,7 +20,8 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 
-
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,6 +38,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private String userID;
     private long pressedTime;
     private Spinner spinner;
+    private RadioButton radioMale, radioFemale;
+    private String fullName, email;
 
 
     @Override
@@ -53,6 +56,24 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT).show();
         }
         pressedTime = System.currentTimeMillis();
+    }
+
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_male:
+                if (checked)
+                    // Pirates are the best
+                    break;
+            case R.id.radio_female:
+                if (checked)
+                    // Ninjas rule
+                    break;
+        }
     }
 
 
@@ -76,6 +97,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(this);
+
+        radioMale = (RadioButton)  findViewById(R.id.radio_male);
+        radioFemale = (RadioButton)  findViewById(R.id.radio_female);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -102,15 +126,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 User userProfile = snapshot.getValue(User.class);
 
                 if (userProfile != null){
-                    String fullName = userProfile.fullName;
-                    String email = userProfile.email;
+                    fullName = userProfile.fullName;
+                    email = userProfile.email;
                     String yearOfStudy = userProfile.yearOfStudy;
                     String gender = userProfile.gender;
                     name.setText(fullName);
                     emailTextView.setText(email);
+
                     // GENDER CHECKED
                     if (gender.equals("Male")) {
-                        //radiobtn male = true
+                        radioMale.setChecked(true);
+                    } else if (gender.equals("Female")) {
+                        radioFemale.setChecked(true);
                     }
                     // Spinner year selected.
                     // Not ideal way but with so few options hardcoding works better than spending the resources figuring out a solution
@@ -145,10 +172,34 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 //send to database
                 //reference.child(userID).updateChildren(user);
                 spinner = (Spinner) findViewById(R.id.spinner);
-                String studyYear = String.valueOf(spinner.getSelectedItem());
+                String yearOfStudy = String.valueOf(spinner.getSelectedItem());
 
+                radioMale = (RadioButton)  findViewById(R.id.radio_male);
+                radioFemale = (RadioButton)  findViewById(R.id.radio_female);
+                String gender = "";
+                if (radioFemale.isChecked()) {
+                    gender = "Female";
+                } else if (radioMale.isChecked()) {
+                    gender = "Male";
+                }
 
-                Log.d("Apply Changes", " Reached here successfully " + studyYear);
+                Log.d("Apply Changes", " Reached here successfully " + yearOfStudy);
+
+                User user = new User(fullName, email, gender, yearOfStudy);
+
+                FirebaseDatabase.getInstance("https://safeaccomodation-58b6c-default-rtdb.europe-west1.firebasedatabase.app/").getReference("Users")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(ProfileActivity.this, "User successfully updated!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(ProfileActivity.this, "Error, try again", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                });
 
 
                 break;
