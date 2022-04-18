@@ -39,7 +39,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private long pressedTime;
     private Spinner spinner;
     private RadioButton radioMale, radioFemale;
-    private String fullName, email;
+    private String fullName, email, yearOfStudy, gender;
+
 
 
     @Override
@@ -128,8 +129,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 if (userProfile != null){
                     fullName = userProfile.fullName;
                     email = userProfile.email;
-                    String yearOfStudy = userProfile.yearOfStudy;
-                    String gender = userProfile.gender;
+                    yearOfStudy = userProfile.yearOfStudy;
+                    gender = userProfile.gender;
                     name.setText(fullName);
                     emailTextView.setText(email);
 
@@ -172,11 +173,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 //send to database
                 //reference.child(userID).updateChildren(user);
                 spinner = (Spinner) findViewById(R.id.spinner);
-                String yearOfStudy = String.valueOf(spinner.getSelectedItem());
+                yearOfStudy = String.valueOf(spinner.getSelectedItem());
 
                 radioMale = (RadioButton)  findViewById(R.id.radio_male);
                 radioFemale = (RadioButton)  findViewById(R.id.radio_female);
-                String gender = "";
+                gender = "";
                 if (radioFemale.isChecked()) {
                     gender = "Female";
                 } else if (radioMale.isChecked()) {
