@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signIn = (Button) findViewById(R.id.signInBtn);
         signIn.setOnClickListener(this);
 
-        emailAddress = (EditText) findViewById(R.id.editTextEmailAddress);
-        pw = (EditText) findViewById(R.id.editTextPassword);
+//        emailAddress = (EditText) findViewById(R.id.editTextEmailAddress);
+//        pw = (EditText) findViewById(R.id.editTextPassword);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.signInBtn:
-                userLogin();
+//                userLogin();
                 break;
 
             case R.id.forgotPassword:
@@ -69,38 +69,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void userLogin() {
-        String email = emailAddress.getText().toString().trim();
-        String password = pw.getText().toString().trim();
-        if (validation(email, password) == false){
-            email = "";
-            password = "";
-            return;
-        }
-        progressBar.setVisibility(View.VISIBLE);
-
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-
-                    if (user.isEmailVerified()) {
-                        progressBar.setVisibility(View.INVISIBLE);
-                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                    }else {
-                        user.sendEmailVerification();
-                        Toast.makeText(MainActivity.this, "Check your email to verify account", Toast.LENGTH_LONG).show();
-                        progressBar.setVisibility(View.INVISIBLE);
-
-                    }
-                }else {
-                    Toast.makeText(MainActivity.this, "Failed to log in. please check your credentionals", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
+//    private void userLogin() {
+//        String email = emailAddress.getText().toString().trim();
+//        String password = pw.getText().toString().trim();
+//        if (validation(email, password) == false){
+//            email = "";
+//            password = "";
+//            return;
+//        }
+//        progressBar.setVisibility(View.VISIBLE);
+//
+//        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if(task.isSuccessful()){
+//                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//
+//
+//                    if (user.isEmailVerified()) {
+//                        progressBar.setVisibility(View.INVISIBLE);
+//                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+//                    }else {
+//                        user.sendEmailVerification();
+//                        Toast.makeText(MainActivity.this, "Check your email to verify account", Toast.LENGTH_LONG).show();
+//                        progressBar.setVisibility(View.INVISIBLE);
+//
+//                    }
+//                }else {
+//                    Toast.makeText(MainActivity.this, "Failed to log in. please check your credentionals", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
+//    }
 
     private boolean validation(String email, String password) {
         if(email.isEmpty()){
