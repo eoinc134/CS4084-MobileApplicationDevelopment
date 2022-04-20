@@ -30,7 +30,6 @@ public class ProfileActivity extends AppCompatActivity {
     private String userID;
     private long pressedTime;
 
-
     @Override
     public void onBackPressed() {
         if (pressedTime + 2000 > System.currentTimeMillis()) {
@@ -42,6 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
         pressedTime = System.currentTimeMillis();
     }
+
 
 
     @Override
